@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<robot name="foot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find simple_quad_description)/urdf/leg/foot.gazebo.xacro" />
+
+  <xacro:macro name="foot" params="name radius mass *origin">
+    <material name="${name}_foot_color">
+      <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+
+    <link name="${name}_foot">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${mass}" />
+        <inertia ixx="${2/5*mass*radius*radius}" ixy="0" ixz="0"
+                 iyx="0" iyy="${2/5*mass*radius*radius}" iyz="0"
+                 izx="0" izy="0" izz="${2/5*mass*radius*radius}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+        <material name="${name}_foot_color"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_lower_leg_to_foot_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${name}_lower_leg"/>
+      <child link="${name}_foot"/>
+      <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+
+    <!-- Gazebo Plugin -->
+    <xacro:foot_gazebo name="${name}"/>
+  </xacro:macro>
+</robot>

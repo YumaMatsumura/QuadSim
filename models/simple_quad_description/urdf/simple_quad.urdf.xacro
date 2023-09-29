@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<robot name="simple_quad" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- include xacro files -->
+  <xacro:include filename="$(find simple_quad_description)/urdf/simple_quad.ros2_control.xacro"/>
+  <xacro:include filename="$(find simple_quad_description)/urdf/body/body.urdf.xacro"/>
+  <xacro:include filename="$(find simple_quad_description)/urdf/leg/hip.urdf.xacro"/>
+  <xacro:include filename="$(find simple_quad_description)/urdf/leg/upper_leg.urdf.xacro"/>
+  <xacro:include filename="$(find simple_quad_description)/urdf/leg/lower_leg.urdf.xacro"/>
+  <!-- xacro:include filename="$(find simple_quad_description)/urdf/sensors/lidar.urdf.xacro"/ -->
+
+  <!-- arg -->
+  <xacro:arg name="use_ignition" default="true"/>
+
+  <!-- property -->
+  <xacro:property name="use_ignition" value="$(arg use_ignition)"/>
+  <xacro:property name="body_mass" value="148.6"/>
+  <xacro:property name="hip_mass" value="1.857211"/>
+  <xacro:property name="hip_shift_x" value="0.25"/>
+  <xacro:property name="hip_shift_y" value="0.1"/>
+  <xacro:property name="hip_shift_z" value="0.025"/>
+  <xacro:property name="upper_leg_mass" value="2.895276"/>
+  <xacro:property name="upper_leg_shift_y" value="0.1"/>
+  <xacro:property name="lower_leg_mass" value="2.0"/>
+  <xacro:property name="lower_leg_shift_z" value="-0.19"/>
+  <xacro:property name="lidar_radius" value="0.04"/>
+  <xacro:property name="lidar_length" value="0.04"/>
+  <xacro:property name="lidar_mass" value="0.01"/>
+  <xacro:property name="lidar_shift_x" value="0"/>
+  <xacro:property name="lidar_shift_y" value="0"/>
+  <xacro:property name="lidar_shift_z" value="0.14"/>
+
+  <!-- ======== Body Description ======== -->
+  <xacro:body name="base_link" mass="${body_mass}"/>
+
+  <!-- ======== Leg Description ======== -->
+  <xacro:hip name="lf" parent="base_link" mass="${hip_mass}" side="1" use_ignition="${use_ignition}">
+    <origin xyz="${hip_shift_x} ${hip_shift_y} ${hip_shift_z}" rpy="0 0 0" use_ignition="${use_ignition}"/>
+  </xacro:hip>
+  <xacro:hip name="rf" parent="base_link" mass="${hip_mass}" side="-1" use_ignition="${use_ignition}">
+    <origin xyz="${hip_shift_x} ${-hip_shift_y} ${hip_shift_z}" rpy="0 0 0"/>
+  </xacro:hip>
+  <xacro:hip name="lb" parent="base_link" mass="${hip_mass}" side="1" use_ignition="${use_ignition}">
+    <origin xyz="${-hip_shift_x} ${hip_shift_y} ${hip_shift_z}" rpy="0 0 0"/>
+  </xacro:hip>
+  <xacro:hip name="rb" parent="base_link" mass="${hip_mass}" side="-1" use_ignition="${use_ignition}">
+    <origin xyz="${-hip_shift_x} ${-hip_shift_y} ${hip_shift_z}" rpy="0 0 0"/>
+  </xacro:hip>
+
+  <xacro:upper_leg name="lf" mass="${upper_leg_mass}" use_ignition="${use_ignition}">
+    <origin xyz="0 ${upper_leg_shift_y} 0" rpy="0 0 0"/>
+  </xacro:upper_leg>
+  <xacro:upper_leg name="rf" mass="${upper_leg_mass}" use_ignition="${use_ignition}">
+    <origin xyz="0 ${-upper_leg_shift_y} 0" rpy="0 0 0"/>
+  </xacro:upper_leg>
+  <xacro:upper_leg name="lb" mass="${upper_leg_mass}" use_ignition="${use_ignition}">
+    <origin xyz="0 ${upper_leg_shift_y} 0" rpy="0 0 0"/>
+  </xacro:upper_leg>
+  <xacro:upper_leg name="rb" mass="${upper_leg_mass}" use_ignition="${use_ignition}">
+    <origin xyz="0 ${-upper_leg_shift_y} 0" rpy="0 0 0"/>
+  </xacro:upper_leg>
+
+  <xacro:lower_leg name="lf" mass="${lower_leg_mass}" use_ignition="${use_ignition}">
+    <origin xyz="0 0 ${lower_leg_shift_z}" rpy="0 0 0"/>
+  </xacro:lower_leg>
+  <xacro:lower_leg name="rf" mass="${lower_leg_mass}" use_ignition="${use_ignition}">
+    <origin xyz="0 0 ${lower_leg_shift_z}" rpy="0 0 0"/>
+  </xacro:lower_leg>
+  <xacro:lower_leg name="lb" mass="${lower_leg_mass}" use_ignition="${use_ignition}">
+    <origin xyz="0 0 ${lower_leg_shift_z}" rpy="0 0 0"/>
+  </xacro:lower_leg>
+  <xacro:lower_leg name="rb" mass="${lower_leg_mass}" use_ignition="${use_ignition}">
+    <origin xyz="0 0 ${lower_leg_shift_z}" rpy="0 0 0"/>
+  </xacro:lower_leg>
+
+  <!-- ======== Sensors Description ======== -->
+  <!-- xacro:lidar name="laser" parent="base_link" radius="${lidar_radius}" length="${lidar_length}" mass="${lidar_mass}">
+    <origin xyz="${lidar_shift_x} ${lidar_shift_y} ${lidar_shift_z}" rpy="0 0 0"/>
+  </xacro:lidar -->
+
+  <!-- ======== ros2_control ======== -->
+  <xacro:simple_quad_ros2_control use_ignition="${use_ignition}"/>
+</robot>

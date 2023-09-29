@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<robot name="lower_leg" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find simple_quad_description)/urdf/leg/lower_leg.gazebo.xacro" />
+  <xacro:include filename="$(find simple_quad_description)/urdf/leg/lower_leg.ros2_control.xacro" />
+
+  <xacro:macro name="lower_leg" params="name mass *origin use_ignition">
+    <material name="${name}_lower_leg_color">
+      <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+
+    <link name="${name}_lower_leg">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${mass}" />
+        <inertia ixx="0.03555" ixy="0" ixz="0"
+                 iyx="0" iyy="0.03576" iyz="0"
+                 izx="0" izy="0" izz="0.001021"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find simple_quad_description)/meshes/lower_leg.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${name}_lower_leg_color"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find simple_quad_description)/meshes/lower_leg.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_upper_leg_to_lower_leg_joint" type="revolute">
+      <limit effort="25" lower="${-pi}" upper="${0.0}" velocity="1.5"/>
+      <xacro:insert_block name="origin"/>
+      <parent link="${name}_upper_leg"/>
+      <child link="${name}_lower_leg"/>
+      <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+
+    <!-- Gazebo Plugin -->
+    <xacro:lower_leg_gazebo name="${name}"/>
+
+    <!-- ros2_control Plugin -->
+    <xacro:lower_leg_ros2_control name="${name}" use_ignition="${use_ignition}"/>
+  </xacro:macro>
+</robot>

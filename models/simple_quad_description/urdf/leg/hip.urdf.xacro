@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<robot name="hip" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find simple_quad_description)/urdf/leg/hip.gazebo.xacro" />
+  <xacro:include filename="$(find simple_quad_description)/urdf/leg/hip.ros2_control.xacro" />
+
+  <xacro:macro name="hip_mesh">
+    <xacro:if value="${side==1}">
+      <mesh filename="file://$(find simple_quad_description)/meshes/left_hip.stl" scale="0.001 0.001 0.001"/>
+    </xacro:if>
+    <xacro:if value="${side==-1}">
+      <mesh filename="file://$(find simple_quad_description)/meshes/right_hip.stl" scale="0.001 0.001 0.001"/>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="hip" params="name parent mass side *origin use_ignition">
+    <material name="${name}_hip_color">
+      <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+
+    <link name="${name}_hip">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${mass}" />
+        <inertia ixx="0.003187" ixy="0" ixz="0"
+                 iyx="0" iyy="0.0007538" iyz="0"
+                 izx="0" izy="0" izz="0.003207"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <xacro:hip_mesh/>
+        </geometry>
+        <material name="${name}_hip_color"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <xacro:hip_mesh/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_body_to_hip_joint" type="revolute">
+      <limit effort="25" lower="${-pi/2}" upper="${pi/2}" velocity="1.5"/>
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${name}_hip"/>
+      <axis xyz="1.0 0.0 0.0"/>
+    </joint>
+
+    <!-- Gazebo Plugin -->
+    <xacro:hip_gazebo name="${name}"/>
+
+    <!-- ros2_control Plugin -->
+    <xacro:hip_ros2_control name="${name}" use_ignition="${use_ignition}"/>
+  </xacro:macro>
+</robot>

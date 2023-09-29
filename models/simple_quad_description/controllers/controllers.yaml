@@ -1,0 +1,55 @@
+controller_manager:
+  ros__parameters:
+    use_sim_time: true
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    joint_group_position_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    # position_controller:
+    #   type: joint_trajectory_controller/JointTrajectoryController
+
+joint_group_position_controller:
+  ros__parameters:
+    use_sim_time: true
+    joints:
+      - lf_body_to_hip_joint
+      - rf_body_to_hip_joint
+      - lb_body_to_hip_joint
+      - rb_body_to_hip_joint
+      - lf_hip_to_upper_leg_joint
+      - rf_hip_to_upper_leg_joint
+      - lb_hip_to_upper_leg_joint
+      - rb_hip_to_upper_leg_joint
+      - lf_upper_leg_to_lower_leg_joint
+      - rf_upper_leg_to_lower_leg_joint
+      - lb_upper_leg_to_lower_leg_joint
+      - rb_upper_leg_to_lower_leg_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+# position_controller:
+#   ros__parameters:
+#     use_sim_time: true
+#     joints:
+#       - lf_body_to_hip_joint
+#       - rf_body_to_hip_joint
+#       - lb_body_to_hip_joint
+#       - rb_body_to_hip_joint
+#       - lf_hip_to_upper_leg_joint
+#       - rf_hip_to_upper_leg_joint
+#       - lb_hip_to_upper_leg_joint
+#       - rb_hip_to_upper_leg_joint
+#       - lf_upper_leg_to_lower_leg_joint
+#       - rf_upper_leg_to_lower_leg_joint
+#       - lb_upper_leg_to_lower_leg_joint
+#       - rb_upper_leg_to_lower_leg_joint
+#     command_interfaces:
+#       - position
+#     state_interfaces:
+#       - position
+#       - velocity
