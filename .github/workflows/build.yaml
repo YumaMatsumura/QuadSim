@@ -1,9 +1,9 @@
 name: build and test
 on:
   pull_request:
-    branches: [iron-devel]
+    branches: [master]
   push:
-    branches: [iron-devel]
+    branches: [master]
 jobs:
   build_simrobo:
     runs-on: ${{ matrix.os }}
