@@ -32,18 +32,12 @@ def generate_launch_description():
     # Create the launch configuration variables
     robot = LaunchConfiguration('robot')
     use_sim_time = LaunchConfiguration('use_sim_time')
-    use_ignition = LaunchConfiguration('use_ignition')
     use_rviz = LaunchConfiguration('use_rviz')
     declare_robot_cmd = DeclareLaunchArgument(
         'robot', default_value='simple_quad', description='Robot name to start.'
     )
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time', default_value='True', description='Use simulation (Gazebo) clock if true'
-    )
-    declare_use_ignition_cmd = DeclareLaunchArgument(
-        'use_ignition',
-        default_value='True',
-        description='Use ignition gazebo if true, use gazebo if false',
     )
     declare_use_rviz_cmd = DeclareLaunchArgument(
         'use_rviz', default_value='True', description='Whether to use rviz'
@@ -98,7 +92,6 @@ def generate_launch_description():
         [
             declare_robot_cmd,
             declare_use_sim_time_cmd,
-            declare_use_ignition_cmd,
             declare_use_rviz_cmd,
             bringup_display_nodes,
         ]
