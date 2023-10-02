@@ -33,7 +33,7 @@ def generate_launch_description() -> LaunchDescription:
     pose = {
         'x': LaunchConfiguration('x_pose', default='0.0'),
         'y': LaunchConfiguration('y_pose', default='0.0'),
-        'z': LaunchConfiguration('z_pose', default='0.2'),
+        'z': LaunchConfiguration('z_pose', default='0.5'),
         'R': LaunchConfiguration('roll', default='0.0'),
         'P': LaunchConfiguration('pitch', default='0.0'),
         'Y': LaunchConfiguration('yaw', default='0.0'),
@@ -93,7 +93,7 @@ def generate_launch_description() -> LaunchDescription:
 
     spawn_entity = create_gz_node()
     load_joint_state_broadcaster = load_controller('joint_state_broadcaster')
-    load_position_controller = load_controller('joint_group_position_controller')
+    load_position_controller = load_controller('joint_group_effort_controller')
 
     return LaunchDescription(
         [

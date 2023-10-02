@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<robot name="body" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="body" params="name mass x_length y_length z_length">
+
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${mass}" />
+        <inertia ixx="${mass * (y_length * y_length + z_length * z_length) / 12}" ixy="0.0" ixz="0.0"
+                 iyx="0.0" iyy="${mass * (z_length * z_length + x_length * x_length) / 12}" iyz="0.0"
+                 izx="0.0" izy="0.0" izz="${mass * (x_length * x_length + y_length * y_length) / 12}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find champ_quad_description)/meshes/body.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="body_color">
+          <color rgba="1.0 1.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find champ_quad_description)/meshes/body.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <gazebo reference="${name}">
+      <material>Gazebo/Yellow</material>
+    </gazebo>
+  </xacro:macro>
+</robot>

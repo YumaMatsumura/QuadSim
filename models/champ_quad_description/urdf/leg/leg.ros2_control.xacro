@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="leg_ros2_control" params="name">
+
+    <ros2_control name="${name}_leg" type="system">
+      <hardware>
+        <xacro:if value="${use_ignition}">
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </xacro:if>
+        <xacro:unless value="${use_ignition}">
+          <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </xacro:unless>
+      </hardware>
+
+      <joint name="${name}_hip_joint">
+        <command_interface name="effort"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="${name}_upper_leg_joint">
+        <command_interface name="effort"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="${name}_lower_leg_joint">
+        <command_interface name="effort"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+  </xacro:macro>
+</robot>

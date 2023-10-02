@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<robot name="simple_quad" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- include xacro files -->
+  <xacro:include filename="$(find champ_quad_description)/urdf/champ_quad.ros2_control.xacro"/>
+  <xacro:include filename="$(find champ_quad_description)/urdf/body/body.urdf.xacro"/>
+  <xacro:include filename="$(find champ_quad_description)/urdf/leg/leg.urdf.xacro"/>
+  <!-- xacro:include filename="$(find simple_quad_description)/urdf/sensors/lidar.urdf.xacro"/ -->
+
+  <!-- arg -->
+  <xacro:arg name="use_ignition" default="true"/>
+
+  <!-- property -->
+  <xacro:property name="use_ignition" value="$(arg use_ignition)"/>
+  <xacro:property name="body_mass" value="2.0"/>
+  <xacro:property name="body_x_length" value="0.5"/>
+  <xacro:property name="body_y_length" value="0.29"/>
+  <xacro:property name="body_z_length" value="0.130"/>
+  <xacro:property name="hip_mass" value="0.250"/>
+  <xacro:property name="hip_x_length" value="0.112"/>
+  <xacro:property name="hip_y_length" value="0.08"/>
+  <xacro:property name="hip_z_length" value="0.130"/>
+  <xacro:property name="upper_leg_mass" value="0.125"/>
+  <xacro:property name="upper_leg_x_length" value="0.05"/>
+  <xacro:property name="upper_leg_y_length" value="0.03"/>
+  <xacro:property name="upper_leg_z_length" value="0.1905"/>
+  <xacro:property name="lower_leg_mass" value="0.125"/>
+  <xacro:property name="lower_leg_x_length" value="0.039"/>
+  <xacro:property name="lower_leg_y_length" value="0.022"/>
+  <xacro:property name="lower_leg_z_length" value="0.156"/>
+  <xacro:property name="body_to_hip_x" value="0.175"/>
+  <xacro:property name="body_to_hip_y" value="0.105"/>
+  <xacro:property name="hip_to_upper_leg_y" value="0.06"/>
+  <xacro:property name="upper_leg_to_lower_leg_z" value="0.141"/>
+  <xacro:property name="lidar_radius" value="0.04"/>
+  <xacro:property name="lidar_length" value="0.04"/>
+  <xacro:property name="lidar_mass" value="0.01"/>
+  <xacro:property name="lidar_shift_x" value="0"/>
+  <xacro:property name="lidar_shift_y" value="0"/>
+  <xacro:property name="lidar_shift_z" value="0.14"/>
+
+  <!-- ======== Body Description ======== -->
+  <xacro:body name="base_link" mass="${body_mass}"
+              x_length="${body_x_length}" y_length="${body_y_length}" z_length="${body_z_length}"/>
+
+  <!-- ======== Leg Description ======== -->
+  <xacro:leg name="lf"/>
+  <xacro:leg name="rf"/>
+  <xacro:leg name="lb"/>
+  <xacro:leg name="rb"/>
+
+  <!-- ======== Sensors Description ======== -->
+  <!-- xacro:lidar name="laser" parent="base_link" radius="${lidar_radius}" length="${lidar_length}" mass="${lidar_mass}">
+    <origin xyz="${lidar_shift_x} ${lidar_shift_y} ${lidar_shift_z}" rpy="0 0 0"/>
+  </xacro:lidar -->
+
+  <!-- ======== ros2_control ======== -->
+  <xacro:champ_quad_ros2_control/>
+</robot>

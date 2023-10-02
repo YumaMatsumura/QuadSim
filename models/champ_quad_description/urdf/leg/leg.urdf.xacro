@@ -1,0 +1,125 @@
+<?xml version="1.0" ?>
+<robot name="leg" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find champ_quad_description)/urdf/leg/leg.gazebo.xacro"/>
+  <xacro:include filename="$(find champ_quad_description)/urdf/leg/leg.ros2_control.xacro" />
+
+  <xacro:macro name="leg" params="name">
+    <xacro:if value="${name == 'lf'}">
+      <xacro:property name="body_to_hip" value="${body_to_hip_x} ${body_to_hip_y} 0" />
+      <xacro:property name="hip_to_upper_leg" value="0 ${hip_to_upper_leg_y} 0" />
+    </xacro:if>
+    <xacro:if value="${name == 'lb'}">
+      <xacro:property name="body_to_hip" value="-${body_to_hip_x} ${body_to_hip_y} 0" />
+      <xacro:property name="hip_to_upper_leg" value="0 ${hip_to_upper_leg_y} 0" />
+    </xacro:if>
+    <xacro:if value="${name == 'rf'}">
+      <xacro:property name="body_to_hip" value="${body_to_hip_x} -${body_to_hip_y} 0" />
+      <xacro:property name="hip_to_upper_leg" value="0 -${hip_to_upper_leg_y} 0" />
+    </xacro:if>
+    <xacro:if value="${name == 'rb'}">
+      <xacro:property name="body_to_hip" value="-${body_to_hip_x} -${body_to_hip_y} 0" />
+      <xacro:property name="hip_to_upper_leg" value="0 -${hip_to_upper_leg_y} 0" />
+    </xacro:if>
+
+    <link name="${name}_hip_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${hip_mass}"/>
+        <inertia ixx="${hip_mass * (hip_y_length * hip_y_length + hip_z_length * hip_z_length) / 12}" ixy="0.0" ixz="0.0"
+                 iyx="0.0" iyy="${hip_mass * (hip_z_length * hip_z_length + hip_x_length * hip_x_length) / 12}" iyz="0.0"
+                 izx="0.0" izy="0.0" izz="${hip_mass * (hip_x_length * hip_x_length + hip_y_length * hip_y_length) / 12}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find champ_quad_description)/meshes/hip.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${name}_color">
+          <color rgba="1.0 1.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find champ_quad_description)/meshes/hip.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${name}_upper_leg_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${upper_leg_mass}"/>
+        <inertia ixx="${upper_leg_mass * (upper_leg_y_length * upper_leg_y_length + upper_leg_z_length * upper_leg_z_length) / 12}" ixy="0.0" ixz="0.0"
+                 iyx="0.0" iyy="${upper_leg_mass * (upper_leg_z_length * upper_leg_z_length + upper_leg_x_length * upper_leg_x_length) / 12}" iyz="0.0"
+                 izx="0.0" izy="0.0" izz="${upper_leg_mass * (upper_leg_x_length * upper_leg_x_length + upper_leg_y_length * upper_leg_y_length) / 12}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find champ_quad_description)/meshes/upper_leg.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${name}_color">
+          <color rgba="1.0 1.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find champ_quad_description)/meshes/upper_leg.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${name}_lower_leg_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${lower_leg_mass}"/>
+        <inertia ixx="${lower_leg_mass * (lower_leg_y_length * lower_leg_y_length + lower_leg_z_length * lower_leg_z_length) / 12}" ixy="0.0" ixz="0.0"
+                 iyx="0.0" iyy="${lower_leg_mass * (lower_leg_z_length * lower_leg_z_length + lower_leg_x_length * lower_leg_x_length) / 12}" iyz="0.0"
+                 izx="0.0" izy="0.0" izz="${lower_leg_mass * (lower_leg_x_length * lower_leg_x_length + lower_leg_y_length * lower_leg_y_length) / 12}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find champ_quad_description)/meshes/lower_leg.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${name}_color">
+          <color rgba="1.0 1.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find champ_quad_description)/meshes/lower_leg.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_hip_joint" type="fixed">
+      <axis xyz="1 0 0"/>
+      <limit effort="25" lower="${-pi}" upper="${pi}" velocity="1.5"/>
+      <parent link="base_link"/>
+      <child link="${name}_hip_link"/>
+      <origin xyz="${body_to_hip}" rpy="0 0 0"/>
+    </joint>
+    <joint name="${name}_upper_leg_joint" type="fixed">
+      <axis xyz="0 1 0"/>
+      <limit effort="25" lower="${-pi}" upper="${pi}" velocity="1.5"/>
+      <parent link="${name}_upper_leg_link"/>
+      <child link="${name}_lower_leg_link"/>
+      <origin xyz="0 0 -${upper_leg_to_lower_leg_z}" rpy="0 0 0"/>
+    </joint>
+    <joint name="${name}_lower_leg_joint" type="fixed">
+      <axis xyz="0 1 0"/>
+      <limit effort="25" lower="${-pi}" upper="${pi}" velocity="1.5"/>
+      <parent link="${name}_hip_link"/>
+      <child link="${name}_upper_leg_link"/>
+      <origin xyz="${hip_to_upper_leg}" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Gazebo Plugin -->
+    <xacro:leg_gazebo name="${name}"/>
+
+    <!-- ros2_control -->
+    <xacro:leg_ros2_control name="${name}"/>
+  </xacro:macro>
+</robot>
