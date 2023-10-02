@@ -30,7 +30,7 @@ def generate_launch_description():
     pose = {
         'x': LaunchConfiguration('x_pose', default='0.0'),
         'y': LaunchConfiguration('y_pose', default='0.0'),
-        'z': LaunchConfiguration('z_pose', default='0.2'),
+        'z': LaunchConfiguration('z_pose', default='0.5'),
         'R': LaunchConfiguration('roll', default='0.0'),
         'P': LaunchConfiguration('pitch', default='0.0'),
         'Y': LaunchConfiguration('yaw', default='0.0'),
