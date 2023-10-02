@@ -29,16 +29,16 @@ joint_group_effort_controller:
     state_interfaces:
       - position
       - velocity
-#    gains:
-#      lf_hip_joint        : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      lf_upper_leg_joint  : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      lf_lower_leg_joint  : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      rf_hip_joint        : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      rf_upper_leg_joint  : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      rf_lower_leg_joint  : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      lb_hip_joint        : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      lb_upper_leg_joint  : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      lb_lower_leg_joint  : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      rb_hip_joint        : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      rb_upper_leg_joint  : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
-#      rb_lower_leg_joint  : {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+    gains:
+      lf_hip_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      lf_upper_leg_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      lf_lower_leg_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      rf_hip_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      rf_upper_leg_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      rf_lower_leg_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      lb_hip_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      lb_upper_leg_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      lb_lower_leg_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      rb_hip_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      rb_upper_leg_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
+      rb_lower_leg_joint: {p: 100.0, i: 0.2, d: 1.0, i_clamp: 2.5}
