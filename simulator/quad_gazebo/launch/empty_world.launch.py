@@ -93,7 +93,7 @@ def generate_launch_description() -> LaunchDescription:
 
     spawn_entity = create_gz_node()
     load_joint_state_broadcaster = load_controller('joint_state_broadcaster')
-    load_effort_controller = load_controller('joint_group_effort_controller')
+    load_position_controller = load_controller('position_controller')
 
     return LaunchDescription(
         [
@@ -128,7 +128,7 @@ def generate_launch_description() -> LaunchDescription:
             ),
             RegisterEventHandler(
                 event_handler=OnProcessExit(
-                    target_action=load_joint_state_broadcaster, on_exit=[load_effort_controller]
+                    target_action=load_joint_state_broadcaster, on_exit=[load_position_controller]
                 )
             ),
         ]

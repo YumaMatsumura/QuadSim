@@ -96,24 +96,24 @@
 
     <joint name="${name}_hip_joint" type="revolute">
       <axis xyz="1 0 0"/>
-      <limit effort="25" lower="${-pi}" upper="${pi}" velocity="1.5"/>
+      <limit effort="25" lower="${-pi}" upper="${pi}" velocity="6.0"/>
       <parent link="base_link"/>
       <child link="${name}_hip_link"/>
       <origin xyz="${body_to_hip}" rpy="0 0 0"/>
     </joint>
     <joint name="${name}_upper_leg_joint" type="revolute">
       <axis xyz="0 1 0"/>
-      <limit effort="25" lower="${-pi}" upper="${pi}" velocity="1.5"/>
-      <parent link="${name}_upper_leg_link"/>
-      <child link="${name}_lower_leg_link"/>
-      <origin xyz="0 0 -${upper_leg_to_lower_leg_z}" rpy="0 0 0"/>
-    </joint>
-    <joint name="${name}_lower_leg_joint" type="revolute">
-      <axis xyz="0 1 0"/>
-      <limit effort="25" lower="${-pi}" upper="${pi}" velocity="1.5"/>
+      <limit effort="25" lower="${-pi}" upper="${pi}" velocity="6.0"/>
       <parent link="${name}_hip_link"/>
       <child link="${name}_upper_leg_link"/>
       <origin xyz="${hip_to_upper_leg}" rpy="0 0 0"/>
+    </joint>
+    <joint name="${name}_lower_leg_joint" type="revolute">
+      <axis xyz="0 1 0"/>
+      <limit effort="25" lower="${-pi}" upper="${pi}" velocity="6.0"/>
+      <parent link="${name}_upper_leg_link"/>
+      <child link="${name}_lower_leg_link"/>
+      <origin xyz="0 0 -${upper_leg_to_lower_leg_z}" rpy="0 0 0"/>
     </joint>
 
     <!-- Gazebo Plugin -->
